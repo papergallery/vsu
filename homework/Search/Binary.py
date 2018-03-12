@@ -10,7 +10,7 @@ def search(list, a, b, c):
     else:
         return -1
 
-num = [3, 6, 9, 13, 30]
+num = [3, 5, 9, 13, 30]
 c = 10
 
 print(search(num, 0, len(num)-1, c))
