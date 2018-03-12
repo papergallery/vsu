@@ -4,5 +4,5 @@ def search(a, list):
             return k
         return -1
 
-num = [9, 6, 3, 13, 16]
+num = [9, 5, 3, 13, 16]
 print(search(42, num))

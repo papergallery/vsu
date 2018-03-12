@@ -32,4 +32,4 @@ def integral_trapeze(func, a, b, n):
 def f(x):
     return 10
 
-print(integral_trapeze(f,0,10,100))
+print(integral_trapeze(f,0,10,10))

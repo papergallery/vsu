@@ -20,5 +20,5 @@ def calcCakeCount(personsCount):
     else:
         return int(personsCount * 3.3)
 
-count = calcCakeCount(9)
+count = calcCakeCount(8)
 print(count)

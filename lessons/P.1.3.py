@@ -36,4 +36,4 @@ def drawFunction(func, minX, maxX, n):
                 outString += "@"
                 print(outString)
 
-drawFunction(line, -10, 10, 100)
+drawFunction(line, -10, 10, 10)
