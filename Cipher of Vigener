@@ -6,7 +6,6 @@ alphabet = ['а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж',
             'ч', 'ш', 'щ', 'ъ', 'ы', 'ь', 'э', 'ю', 'я']
 text = input('Enter the text in Russian for encryption: ').lower()
 key = input('Enter the key: ')
-offset = int(input('Enter the length of the offset: '))
 for i in text:
     if i not in alphabet:
         MassMessage.append(i)
