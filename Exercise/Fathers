@@ -1,0 +1,33 @@
+#############################
+#Sorting programmers by name#
+#############################
+
+fathers = {'Harold Abelson': 'Logo',
+           'Kenneth Eugene Iverson': 'APL',
+           'Andrei Alexandrescu': 'C++',
+           'Alfred Vaino Aho': 'AWK',
+           'Guido van Rossum': 'Python',
+           'Jeremy Ashkenas': 'CoffeeScript',
+           'Walter Bright': 'D',
+           'John George Kemeny': 'Basic',
+           'Peter Naur': 'Algol',
+           'Don Syme': 'F#'
+           'Rasmus Lerdorf': 'php',
+           'Larry Wall': 'perl',
+           'James Gosling': 'java',
+           'Simon Cozens': 'parrot',}
+
+x = sorted(fathers.keys())
+for language in x:
+    print(language," - ",fathers[language])
+
+##################################################
+#Search for a programming language by the creator#
+##################################################
+
+search = input("What's name do you want to find ?")
+for key, value in fathers.items():
+    if key == search:
+        print(fathers[key])
+    else:
+        print("False")
