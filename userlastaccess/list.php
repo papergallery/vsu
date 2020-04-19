@@ -48,8 +48,8 @@ if ($mform->is_cancelled()) {
             if ($myuser->profile_field_position==$position){
                 $reportuser = $reportuser.'<a href="https://edu.vsu.ru/user/profile.php?id='.$user->id.'">'.
                     $user->lastname.' '.$user->firstname.' '.
-                    $user->middlename.'</a>'.', курс '.$myuser->profile_field_year.', студенческий '.
-                    $myuser->profile_field_login.', последний вход: '.gmdate('Y-m-d H:i', $user->lastaccess).'</br>';
+                    $user->middlename.'</a>'.', факультет '.$myuser->profile_field_fac.',
+                     последний вход: '.gmdate('Y-m-d H:i', $user->lastaccess).'</br>';
             }
         }
 	} else {
@@ -63,8 +63,9 @@ if ($mform->is_cancelled()) {
                 $myuser->profile_field_position==$position){
                 $reportuser = $reportuser.'<a href="https://edu.vsu.ru/user/profile.php?id='.$user->id.'">'.
                     $user->lastname.' '.$user->firstname.' '.
-                    $user->middlename.'</a>'.', курс '.$myuser->profile_field_year.', студенческий '.
-                    $myuser->profile_field_login.', последний вход: '.gmdate('Y-m-d H:i', $user->lastaccess).'</br>';
+                    $user->middlename.'</a>'.', курс '.$myuser->profile_field_year.', группа '
+                    . $myuser->profile_field_groupname.', направление '.$myuser->profile_field_naprspec.', 
+                    последний вход: '.gmdate('Y-m-d H:i', $user->lastaccess).'</br>';
             }
         }
 	}
