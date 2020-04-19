@@ -45,8 +45,7 @@ if ($mform->is_cancelled()) {
             $myuser = new stdClass();
             $myuser->id = $user->id;
             profile_load_data($myuser);
-            if ($myuser->profile_field_stat=='учится' &&
-                $myuser->profile_field_position==$position){
+            if ($myuser->profile_field_position==$position){
                 $reportuser = $reportuser.'<a href="https://edu.vsu.ru/user/profile.php?id='.$user->id.'">'.
                     $user->lastname.' '.$user->firstname.' '.
                     $user->middlename.'</a>'.', курс '.$myuser->profile_field_year.', студенческий '.
@@ -78,5 +77,6 @@ if ($mform->is_cancelled()) {
 
 echo $OUTPUT->header();
 $mform->display();
+echo $reportuser;
 echo $OUTPUT->footer();
-echo var_dump($fromform).'</br>';
+
