@@ -71,11 +71,12 @@ if ($mform->is_cancelled()) {
 	}
 
 } else {
-  $mform->display();
+
 }
 
 
 
 echo $OUTPUT->header();
+$mform->display();
 echo $OUTPUT->footer();
 echo var_dump($fromform).'</br>';
