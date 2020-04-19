@@ -77,6 +77,6 @@ if ($mform->is_cancelled()) {
 
 
 echo $OUTPUT->header();
-echo var_dump($fromform).'</br>';
-echo $reportuser;
+$mform->display();
 echo $OUTPUT->footer();
+echo var_dump($fromform).'</br>';
