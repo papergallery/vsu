@@ -22,29 +22,24 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-class block_userlastaccess extends block_base {
+defined('MOODLE_INTERNAL') || die();
+require_once("$CFG->libdir/formslib.php");
 
-    public function init() {
-        $this->title = get_string('userlastaccess', 'block_userlastaccess');
-    }
-    
-    public function get_content() {
-        
-		global $COURSE, $SESSION;
+class userlastaccess_form extends moodleform {
+	public function definition() {
+		global $CFG;
 		
-		if ($this->content != null) {
-				return $this->content;
-			}
-		$context = get_context_instance(CONTEXT_COURSE, 2);
-        if (!has_capability('block/userlastaccess:view', $context)) {return 0;}
-        $this->content = new stdClass;
- 		$this->content->text = '<a href="'.'/blocks/userlastaccess/list.php'.'">Открыть список студентов</a>';
-		$SESSION->courseid = $COURSE->id;
-		return $this->content;
-
-    }
-    
-    function instance_allow_config() {
-        return false;
-    }
+		$mform = $this->_form;
+		$mform->addElement('select', 'faculty', "Выберете факультет", array('Факультет'=>'a', 'b'=>'b', 'ff'=>'ff'), $attributes);
+		$mform->addElement('static', 'chooseusertype', "Выберете тип пользователя:");
+		$radioarray=array();
+		$radioarray[] = $mform->createElement('radio', 'position', '', 'Преподаватель', 1);
+		$radioarray[] = $mform->createElement('radio', 'position', '', 'Студент', 0);
+		$mform->addGroup($radioarray, 'position', '', array(' '), false);
+		$this->add_action_buttons($cancel = true, $submitlabel=null);
+	}
+	
+	function validation($data, $files) {
+		return array();
+	}
 }

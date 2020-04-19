@@ -15,38 +15,55 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * This is a one-line short description of the file.
+ * Plugin version and other meta-data are defined here.
  *
- * You can have a rather longer description of the file as well,
- * if you like, and it can span multiple lines.
- *
- * @package    block_userlastaccess
- * @category   block
- * @copyright  2008 Kim Bloggs
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package     block_userlastaccess
+ * @copyright   2020 
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
 require_once('../../config.php');
 require_once($CFG->dirroot.'/user/profile/lib.php');
+require_once('list_form.php');
 $PAGE->set_url('/blocks/userlastaccess/list.php');
 $PAGE->set_pagelayout('standart');
 $PAGE->set_title(get_string('userlastaccess', 'block_userlastaccess'));
 $PAGE->set_heading(get_string('userlastaccess', 'block_userlastaccess'));
 $context = get_context_instance(CONTEXT_COURSE, $SESSION->couseid);
-$users = $DB->get_records('user', []);
-$i = 1;
-foreach($users as $user) {
-	$myuser = new stdClass();
-	$myuser->id = $user->id;
-	profile_load_data($myuser);
-	if($myuser->profile_field_fac=='Физический факультет'){
-	$reportuser = $reportuser.'<a href="https://edu.vsu.ru/user/profile.php?id='.$user->id.'">'.
-		$user->lastname.' '.$user->firstname.' '.
-		$user->middlename.'</a>'.', курс '.$myuser->profile_field_year.', студенческий '.
-		$myuser->profile_field_login.', последний вход: '.gmdate('Y-m-d H:i', $user->lastaccess).'</br>';
+
+
+$mform = new userlastaccess_form();
+
+if ($mform->is_cancelled()) {
+	
+} else if ($fromform = $mform->get_data()) {
+	$users = $DB->get_records('user', []);
+	$reportuser = '';
+	if ($fromform->position == 1) {
+		$position = 'ППС';
+	} else {
+		$position = 'студент';
+	}
+	foreach($users as $user) {
+		$myuser = new stdClass();
+		$myuser->id = $user->id;
+		profile_load_data($myuser);
+			if ($myuser->profile_field_stat=='учится' &&
+				$myuser->profile_field_fac==$fromform->faculty &&
+				$myuser->profile_field_position==$position){
+			$reportuser = $reportuser.'<a href="https://edu.vsu.ru/user/profile.php?id='.$user->id.'">'.
+			$user->lastname.' '.$user->firstname.' '.
+			$user->middlename.'</a>'.', курс '.$myuser->profile_field_year.', студенческий '.
+			$myuser->profile_field_login.', последний вход: '.gmdate('Y-m-d H:i', $user->lastaccess).'</br>';
 		}
-	$i = $i + 1;
+	}
+} else {
+  $mform->display();
 }
 
+
+
 echo $OUTPUT->header();
+echo var_dump($fromform).'</br>';
 echo $reportuser;
 echo $OUTPUT->footer();
