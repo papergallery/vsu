@@ -41,22 +41,35 @@ if ($mform->is_cancelled()) {
 	$reportuser = '';
 	if ($fromform->position == 1) {
 		$position = 'ППС';
+        foreach($users as $user) {
+            $myuser = new stdClass();
+            $myuser->id = $user->id;
+            profile_load_data($myuser);
+            if ($myuser->profile_field_stat=='учится' &&
+                $myuser->profile_field_position==$position){
+                $reportuser = $reportuser.'<a href="https://edu.vsu.ru/user/profile.php?id='.$user->id.'">'.
+                    $user->lastname.' '.$user->firstname.' '.
+                    $user->middlename.'</a>'.', курс '.$myuser->profile_field_year.', студенческий '.
+                    $myuser->profile_field_login.', последний вход: '.gmdate('Y-m-d H:i', $user->lastaccess).'</br>';
+            }
+        }
 	} else {
 		$position = 'студент';
+        foreach($users as $user) {
+            $myuser = new stdClass();
+            $myuser->id = $user->id;
+            profile_load_data($myuser);
+            if ($myuser->profile_field_stat=='учится' &&
+                $myuser->profile_field_fac==$fromform->faculty &&
+                $myuser->profile_field_position==$position){
+                $reportuser = $reportuser.'<a href="https://edu.vsu.ru/user/profile.php?id='.$user->id.'">'.
+                    $user->lastname.' '.$user->firstname.' '.
+                    $user->middlename.'</a>'.', курс '.$myuser->profile_field_year.', студенческий '.
+                    $myuser->profile_field_login.', последний вход: '.gmdate('Y-m-d H:i', $user->lastaccess).'</br>';
+            }
+        }
 	}
-	foreach($users as $user) {
-		$myuser = new stdClass();
-		$myuser->id = $user->id;
-		profile_load_data($myuser);
-			if ($myuser->profile_field_stat=='учится' &&
-				$myuser->profile_field_fac==$fromform->faculty &&
-				$myuser->profile_field_position==$position){
-			$reportuser = $reportuser.'<a href="https://edu.vsu.ru/user/profile.php?id='.$user->id.'">'.
-			$user->lastname.' '.$user->firstname.' '.
-			$user->middlename.'</a>'.', курс '.$myuser->profile_field_year.', студенческий '.
-			$myuser->profile_field_login.', последний вход: '.gmdate('Y-m-d H:i', $user->lastaccess).'</br>';
-		}
-	}
+
 } else {
   $mform->display();
 }
