@@ -30,6 +30,8 @@ class userlastaccess_form extends moodleform {
 		global $CFG;
 		
 		$mform = $this->_form;
+        $mform->addElement('static', title, 'Оисание',
+            'Выберете параметры факультет и тип пользователя (Студент/Преподаватель). Нажмите "Сохранить" для отображения списка пользователей.');
 		$mform->addElement('select', 'faculty', "Выберете факультет", array('Медико-биологический факультет'=>'Медико-биологический факультет',
             'Факультет географии, геоэкологии и туризма'=>'Факультет географии, геоэкологии и туризма',
             'Геологический факультет'=>'Геологический факультет', 'Факультет журналистики'=>'Факультет журналистики',
@@ -46,7 +48,7 @@ class userlastaccess_form extends moodleform {
 		$radioarray[] = $mform->createElement('radio', 'position', '', 'Преподаватель', 1);
 		$radioarray[] = $mform->createElement('radio', 'position', '', 'Студент', 0);
 		$mform->addGroup($radioarray, 'position', '', array(' '), false);
-		$this->add_action_buttons($cancel = true, $submitlabel=null);
+		$this->add_action_buttons($cancel = true, $submitlabel=null, 'Показать список', 'Сохранить список');
 	}
 	
 	function validation($data, $files) {
