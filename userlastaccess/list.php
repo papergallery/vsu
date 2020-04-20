@@ -48,7 +48,7 @@ if ($mform->is_cancelled()) {
             if ($myuser->profile_field_position==$position){
                 $reportuser = $reportuser.'<a href="https://edu.vsu.ru/user/profile.php?id='.$user->id.'">'.
                     $user->lastname.' '.$user->firstname.' '.
-                    $user->middlename.'</a>'.', факультет '.$myuser->profile_field_fac.',
+                    $user->middlename.'</a>'.', код факультета '.$myuser->profile_field_facultyCodes.',
                      последний вход: '.gmdate('Y-m-d H:i', $user->lastaccess).'</br>';
             }
         }
@@ -74,10 +74,7 @@ if ($mform->is_cancelled()) {
 
 }
 
-
-
 echo $OUTPUT->header();
 $mform->display();
 echo $reportuser;
 echo $OUTPUT->footer();
-

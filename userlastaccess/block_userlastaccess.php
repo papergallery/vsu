@@ -38,7 +38,7 @@ class block_userlastaccess extends block_base {
 		$context = get_context_instance(CONTEXT_COURSE, 2);
         if (!has_capability('block/userlastaccess:view', $context)) {return 0;}
         $this->content = new stdClass;
- 		$this->content->text = '<a href="'.'/blocks/userlastaccess/list.php'.'">Открыть список студентов</a>';
+ 		$this->content->text = '<a href="'.'/blocks/userlastaccess/list.php'.'">Время последнего доступа к порталу студентов и преподавателей факультета</a>';
 		$SESSION->courseid = $COURSE->id;
 		return $this->content;
 

@@ -25,7 +25,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'block_userlastaccess';
-$plugin->release = '0.1.0';
-$plugin->version = 2020041907;
+$plugin->release = '0.1.1';
+$plugin->version = 2020041909;
 $plugin->requires = 2015111300;
 //$plugin->maturity = MATURITY_ALPHA;
