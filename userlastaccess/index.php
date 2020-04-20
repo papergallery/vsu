@@ -34,7 +34,6 @@ if (!has_capability('block/userlastaccess:view', $context)) {
     print_error('nopermissiontoviewforum');
 } else {
 
-
     header('Content-Description: File Transfer');
     header('Content-Type: application/csv');
     header("Content-Disposition: attachment; filename=page-data-export.csv");
@@ -42,19 +41,46 @@ if (!has_capability('block/userlastaccess:view', $context)) {
 
     $handle = fopen('php://output', 'w');
     ob_clean();
-    $users = get_role_users(5, context_course::instance($SESSION->courseid));
-    $i = 1;
-    foreach($users as $user) {
-        $myuser = new stdClass();
-        $myuser->id = $user->id;
-        profile_load_data($myuser);
-        $reportuser = $myuser->profile_field_naprspec.','.
-            $myuser->profile_field_idgroup.','.
-            $user->lastname.','.$user->firstname.','.
-            $user->middlename.','.$user->email;
-        $data = str_getcsv($reportuser);
-        fputcsv($handle, $data);
-        $i = $i + 1;
+    $context = get_context_instance(CONTEXT_COURSE, $SESSION->couseid);
+
+    $mform = new userlastaccess_form();
+
+    if ($fromform = $mform->get_data()) {
+        $users = $DB->get_records('user', []);
+        $reportuser = '';
+        if ($fromform->position == 1) {
+            $position = 'ППС';
+            foreach($users as $user) {
+                $myuser = new stdClass();
+                $myuser->id = $user->id;
+                profile_load_data($myuser);
+                if ($myuser->profile_field_position==$position){
+                    $reportuser = $reportuser.'<a href="https://edu.vsu.ru/user/profile.php?id='.$user->id.'">'.
+                        $user->lastname.' '.$user->firstname.' '.
+                        $user->middlename.'</a>'.', код факультета '.$myuser->profile_field_facultyCodes.',
+                     последний вход: '.gmdate('Y-m-d H:i', $user->lastaccess).'</br>';
+                }
+            }
+        } else {
+            $position = 'студент';
+            foreach($users as $user) {
+                $myuser = new stdClass();
+                $myuser->id = $user->id;
+                profile_load_data($myuser);
+                if ($myuser->profile_field_stat=='учится' &&
+                    $myuser->profile_field_fac==$fromform->faculty &&
+                    $myuser->profile_field_position==$position){
+                    $reportuser = $reportuser.'<a href="https://edu.vsu.ru/user/profile.php?id='.$user->id.'">'.
+                        $user->lastname.' '.$user->firstname.' '.
+                        $user->middlename.'</a>'.', курс '.$myuser->profile_field_year.', группа '
+                        . $myuser->profile_field_groupname.', направление '.$myuser->profile_field_naprspec.', 
+                    последний вход: '.gmdate('Y-m-d H:i', $user->lastaccess).'</br>';
+                }
+            }
+        }
+
+    } else {
+
     }
     ob_flush();
     fclose($handle);
