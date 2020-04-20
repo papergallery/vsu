@@ -30,7 +30,7 @@ $PAGE->set_pagelayout('standart');
 $PAGE->set_title(get_string('userlastaccess', 'block_userlastaccess'));
 $PAGE->set_heading(get_string('userlastaccess', 'block_userlastaccess'));
 $context = get_context_instance(CONTEXT_COURSE, $SESSION->couseid);
-
+$SESSION->blockcontext = $context;
 
 $mform = new userlastaccess_form();
 
@@ -74,7 +74,7 @@ if ($mform->is_cancelled()) {
 } else {
 
 }
-
+$SESSION->reportuser = $reportuser;
 echo $OUTPUT->header();
 $mform->display();
 echo $reportuser;
