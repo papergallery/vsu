@@ -35,7 +35,7 @@ $context = get_context_instance(CONTEXT_COURSE, $SESSION->couseid);
 $mform = new userlastaccess_form();
 
 if ($mform->is_cancelled()) {
-	
+    $this->content->text = '<a href="'.'/blocks/userlastaccess/index.php'.'">Сохранить в файл</a>';
 } else if ($fromform = $mform->get_data()) {
 	$users = $DB->get_records('user', []);
 	$reportuser = '';
