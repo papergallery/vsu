@@ -48,7 +48,12 @@ class userlastaccess_form extends moodleform {
 		$radioarray[] = $mform->createElement('radio', 'position', '', 'Преподаватель', 1);
 		$radioarray[] = $mform->createElement('radio', 'position', '', 'Студент', 0);
 		$mform->addGroup($radioarray, 'position', '', array(' '), false);
-		$this->add_action_buttons($cancel = true, $submitlabel=null, 'Показать список', 'Сохранить список');
+		$this->add_action_buttons($cancel = true, $submitlabel='Отобразить список');
+        $mform->registerNoSubmitButton('save');
+            $otagsgrp = array();
+            $otagsgrp[] =& $mform->createElement('submit', 'save', 'Сохранить список');
+            $mform->addGroup($otagsgrp, 'otagsgrp', null, array(' '), false);
+            $mform->setType('otagsadd', PARAM_NOTAGS);
 	}
 	
 	function validation($data, $files) {
