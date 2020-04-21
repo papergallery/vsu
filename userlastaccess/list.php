@@ -35,8 +35,7 @@ $SESSION->blockcontext = $context;
 $mform = new userlastaccess_form();
 
 if ($mform->is_cancelled()) {
-    $url = new moodle_url('/blocks/userlastaccess/index.php');
-    redirect($url);
+
 } else if ($fromform = $mform->get_data()) {
 	$users = $DB->get_records('user', []);
 	$reportuser = '';
@@ -71,6 +70,9 @@ if ($mform->is_cancelled()) {
         }
 	}
 
+}elseif ($fromform = $mform->no_submit_button_pressed()){
+    $url = new moodle_url('/blocks/userlastaccess/index.php');
+    redirect($url);
 } else {
 
 }
