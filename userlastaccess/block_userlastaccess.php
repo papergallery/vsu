@@ -30,16 +30,16 @@ class block_userlastaccess extends block_base {
     
     public function get_content() {
         
-		global $COURSE, $SESSION;
-		
 		if ($this->content != null) {
 				return $this->content;
 			}
-		$context = get_context_instance(CONTEXT_COURSE, 2);
-        if (!has_capability('block/userlastaccess:view', $context)) {return 0;}
+		$context = context_course::instance(2);
+        if (!has_capability('block/userlastaccess:view', $context)) {
+            return null;
+        }
         $this->content = new stdClass;
- 		$this->content->text = '<a href="'.'/blocks/userlastaccess/list.php'.'">Время последнего доступа к порталу студентов и преподавателей факультета</a>';
-		$SESSION->courseid = $COURSE->id;
+ 		$this->content->text = 'Время последнего доступа к порталу студентов и преподавателей факультета';
+ 		$this->content->footer = html_writer::link(new moodle_url('/blocks/userlastaccess/list.php'), 'Показать');
 		return $this->content;
 
     }

@@ -29,8 +29,7 @@ $PAGE->set_url('/blocks/userlastaccess/list.php');
 $PAGE->set_pagelayout('standart');
 $PAGE->set_title(get_string('userlastaccess', 'block_userlastaccess'));
 $PAGE->set_heading(get_string('userlastaccess', 'block_userlastaccess'));
-$context = get_context_instance(CONTEXT_COURSE, $SESSION->couseid);
-$SESSION->blockcontext = $context;
+$context = $context = context_course::instance(2);
 
 $mform = new userlastaccess_form();
 
@@ -50,6 +49,8 @@ if ($mform->is_cancelled()) {
                     $user->lastname.' '.$user->firstname.' '.
                     $user->middlename.'</a>'.', код факультета '.$myuser->profile_field_facultyCodes.',
                      последний вход: '.gmdate('Y-m-d H:i', $user->lastaccess).'</br>';
+                $csv = $csv.$user->lastname.','.$user->firstname.','.$user->middlename.','.
+                    $myuser->profile_field_facultyCodes.','.gmdate('Y-m-d H:i', $user->lastaccess).'</br>';
             }
         }
 	} else {
@@ -66,6 +67,9 @@ if ($mform->is_cancelled()) {
                     $user->middlename.'</a>'.', курс '.$myuser->profile_field_year.', группа '
                     . $myuser->profile_field_groupname.', направление '.$myuser->profile_field_naprspec.', 
                     последний вход: '.gmdate('Y-m-d H:i', $user->lastaccess).'</br>';
+                $csv = $csv.$user->lastname.','.$user->firstname.','.$user->middlename.','.
+                    $myuser->profile_field_year.','.$myuser->profile_field_groupname.','.
+                    $myuser->profile_field_naprspec.','.gmdate('Y-m-d H:i', $user->lastaccess).'</br>';
             }
         }
 	}
@@ -76,7 +80,8 @@ if ($mform->is_cancelled()) {
 } else {
 
 }
-$SESSION->reportuser = $reportuser;
+
+$SESSION->csv = $csv;
 echo $OUTPUT->header();
 $mform->display();
 echo $reportuser;

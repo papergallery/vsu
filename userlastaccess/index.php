@@ -35,7 +35,7 @@ header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 
 $handle = fopen('php://output', 'w');
 ob_clean();
-$users = explode("</br>", $SESSION->reportuser);
+$users = explode("</br>", $SESSION->csv);
 foreach ($users as $user) {
     $data = str_getcsv($user);
     fputcsv($handle, $data);
@@ -43,3 +43,4 @@ foreach ($users as $user) {
 
 ob_flush();
 fclose($handle);
+
