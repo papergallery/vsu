@@ -74,7 +74,7 @@ if ($mform->is_cancelled()) {
         }
 	}
 
-}elseif ($fromform = $mform->no_submit_button_pressed()){
+} elseif ($fromform = $mform->no_submit_button_pressed()){
     $url = new moodle_url('/blocks/userlastaccess/index.php');
     redirect($url);
 } else {
