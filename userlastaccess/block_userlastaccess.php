@@ -33,14 +33,15 @@ class block_userlastaccess extends block_base {
 		if ($this->content != null) {
 				return $this->content;
 			}
-		if (profile_load_data($USER)->position != 'ППС') {
+		$user = new stdClass();
+		$user->id = $USER->id;
+		if (profile_load_data($user)->profile_field_position != 'ППС') {
 		    return null;
         }
         $this->content = new stdClass;
  		$this->content->text = 'Время последнего доступа к порталу студентов и преподавателей факультета';
  		$this->content->footer = html_writer::link(new moodle_url('/blocks/userlastaccess/list.php'), 'Показать');
 		return $this->content;
-
     }
     
     function instance_allow_config() {
