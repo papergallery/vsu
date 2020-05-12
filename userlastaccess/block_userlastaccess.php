@@ -33,10 +33,9 @@ class block_userlastaccess extends block_base {
 		if ($this->content != null) {
 				return $this->content;
 			}
-		$user = new stdClass();
-		$user->id = $USER->id;
-		if (profile_load_data($user)->profile_field_position != 'ППС') {
-		    return null;
+        $context = context_course::instance(7937);
+        if (!has_capability('block/userlastaccess:view', $context)) {
+            return null;
         }
         $this->content = new stdClass;
  		$this->content->text = 'Время последнего доступа к порталу студентов и преподавателей факультета';
